@@ -6,10 +6,10 @@ import { default as Web3 } from 'web3'
 import { default as contract } from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
-import metaCoinArtifact from '../../build/contracts/MetaCoin.json'
+import publicationRegisterArtifact from '../../build/contracts/PublicationRegister.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-const MetaCoin = contract(metaCoinArtifact)
+const PublicationRegister = contract(publicationRegisterArtifact)
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -22,7 +22,7 @@ const App = {
     const self = this
 
     // Bootstrap the MetaCoin abstraction for Use.
-    MetaCoin.setProvider(web3.currentProvider)
+    PublicationRegister.setProvider(web3.currentProvider)
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function (err, accs) {
@@ -51,7 +51,7 @@ const App = {
   refreshBalance: function () {
     const self = this
 
-    let meta
+    /*let meta
     MetaCoin.deployed().then(function (instance) {
       meta = instance
       return meta.getBalance.call(account, { from: account })
@@ -61,7 +61,7 @@ const App = {
     }).catch(function (e) {
       console.log(e)
       self.setStatus('Error getting balance; see log.')
-    })
+    })*/
   },
 
   sendCoin: function () {
@@ -73,6 +73,18 @@ const App = {
     this.setStatus('Initiating transaction... (please wait)')
 
     let meta
+    PublicationRegister.deployed().then(function(instance) {
+      meta = instance
+      return meta.getContent.call(amount, receiver, {from: account })
+    }).then(function (value){ 
+      const balanceElement = document.getElementById('balance')
+      balanceElement.innerHTML = value.valueOf()
+    }).catch(function (e) {
+      console.log(e)
+      self.setStatus('Error getting balance; see log.')
+    })
+
+    /*let meta
     MetaCoin.deployed().then(function (instance) {
       meta = instance
       return meta.sendCoin(receiver, amount, { from: account })
@@ -82,7 +94,7 @@ const App = {
     }).catch(function (e) {
       console.log(e)
       self.setStatus('Error sending coin; see log.')
-    })
+    })*/
   }
 }
 
