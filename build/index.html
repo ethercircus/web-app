@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MetaCoin - Truffle Webpack Demo w/ Frontend</title>
+  <title>Ether Cyrcus - Simple Article Viewer</title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <script src="./app.js"></script>
+  <script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
+  <script type="text/javascript">
+if (!AbortController) { var AbortController = function () { this.signal = { aborted: false, onabort: null } }; AbortController.prototype.abort = function () { }; }
+    function fetchIPFS() {
+    const node = new Ipfs({ repo: 'ipfs-' + Math.random() })
+    node.once('ready', () => {
+      console.log('Online status: ', node.isOnline() ? 'online' : 'offline')
+      //whichFile = document.getElementById
+      node.files.cat('QmNn3wZTJiuLjwiZvU24doW6ztQLhiyDSrnvQUpxQFj56K', function (err, data) {
+        if (err) {
+          return console.error('Error - ipfs files cat', err, res)
+        }   
+	console.log(data.toString())
+        document.getElementById("balance").innerHTML = data.toString() 
+        return data.toString()
+      })
+      // You can write more code here to use it. Use methods like 
+      // node.files.add, node.files.get. See the API docs here:
+      // https://github.com/ipfs/interface-ipfs-core
+    })
+    }
+    function getEthDataAndFetchIPFS() {
+	    App.sendCoin();
+	    fetchIPFS();
+    }
+  </script>
+ 
 </head>
 <body>
-  <h1>MetaCoin</h1>
-  <h2>Example Truffle Dapp</h2>
-  <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
-
-  <br>
-  <h1>Send MetaCoin</h1>
-  <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
-  <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
-  <br><br><button id="send" onclick="App.sendCoin()">Send MetaCoin</button>
+  <h1>Ether Cyrcus</h1>
+  <h2>Simple Article Viewer</h2>
+  <br><label for="amount">Publication ID:</label><input type="text" id="amount" placeholder="e.g., 0"></input>
+  <br><label for="receiver">Content Index:</label><input type="text" id="receiver" placeholder="e.g., 40"></input>
+  <br><br><button id="send" onclick="getEthDataAndFetchIPFS()">View Article</button>
   <br><br>
+  <h3><span class="black"><span id="balance"></span></span></h3>
   <span id="status"></span>
   <br>
   <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>

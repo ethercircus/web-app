@@ -38,8 +38,6 @@ const App = {
 
       accounts = accs
       account = accounts[0]
-
-      self.refreshBalance()
     })
   },
 
@@ -78,7 +76,7 @@ const App = {
       return meta.getContent.call(amount, receiver, {from: account })
     }).then(function (value){ 
       const balanceElement = document.getElementById('balance')
-      balanceElement.innerHTML = value.valueOf()
+      balanceElement.innerHTML = "loading from IPFS " + value.valueOf() + "..."
     }).catch(function (e) {
       console.log(e)
       self.setStatus('Error getting balance; see log.')
