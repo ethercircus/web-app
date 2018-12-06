@@ -11,8 +11,9 @@ if (!AbortController) { var AbortController = function () { this.signal = { abor
     const node = new Ipfs({ repo: 'ipfs-' + Math.random() })
     node.once('ready', () => {
       console.log('Online status: ', node.isOnline() ? 'online' : 'offline')
-      //whichFile = document.getElementById
-      node.files.cat('QmNn3wZTJiuLjwiZvU24doW6ztQLhiyDSrnvQUpxQFj56K', function (err, data) {
+      whichFile = document.getElementById('balance').innerHTML
+      console.log('Which file: ' + whichFile)
+      node.files.cat(whichFile, function (err, data) {
         if (err) {
           return console.error('Error - ipfs files cat', err, res)
         }   

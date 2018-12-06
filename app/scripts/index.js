@@ -76,7 +76,7 @@ const App = {
       return meta.getContent.call(amount, receiver, {from: account })
     }).then(function (value){ 
       const balanceElement = document.getElementById('balance')
-      balanceElement.innerHTML = "loading from IPFS " + value.valueOf() + "..."
+      balanceElement.innerHTML = value.valueOf()
     }).catch(function (e) {
       console.log(e)
       self.setStatus('Error getting balance; see log.')
